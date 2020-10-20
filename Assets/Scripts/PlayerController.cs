@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private float dashTime;
     [SerializeField] private float startDashTime;
     private int direction;
-    private CameraShake cameraShake;
+    [SerializeField] private CameraShake cameraShake;
     #endregion
 
     private void Awake()
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
         #region Dash
         dashTime = startDashTime;
-        cameraShake = GameObject.FindGameObjectWithTag("CameraShake").GetComponent<CameraShake>();
+        //cameraShake = GameObject.FindGameObjectWithTag("CameraShake").GetComponent<CameraShake>();
         #endregion
     }
 
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
             {
                 direction = 2;
             }
-            cameraShake.ShakeCamera();
+            //cameraShake.ShakeCamera();
 
             animator.SetTrigger("Dashing");
         }
