@@ -6,14 +6,6 @@
             "id": "dabaec97-ff62-4a3c-b667-2892e2f3b728",
             "actions": [
                 {
-                    "name": "UpDown",
-                    "type": "PassThrough",
-                    "id": "af38f75c-f53f-4c5e-b173-46e8fd58884e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "LeftRight",
                     "type": "PassThrough",
                     "id": "63eb44e7-0098-4e3d-bdd4-852a1e3e49fd",
@@ -31,39 +23,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "1D Axis",
-                    "id": "1fef3f65-b744-4f64-82bc-fd11f0b74875",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "UpDown",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "44dfb263-3d1b-4a73-ab54-b700c14aa493",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "UpDown",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "00d802df-f8b8-4188-bac6-72576eac216d",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "UpDown",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
                 {
                     "name": "1D Axis",
                     "id": "b8ea2f48-7176-4a1c-9ccb-cdbc325a1dba",

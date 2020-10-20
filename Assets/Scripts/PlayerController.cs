@@ -46,7 +46,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float moveUpDownInput = controls.Movement.UpDown.ReadValue<float>();
         float moveLeftRightInput = controls.Movement.LeftRight.ReadValue<float>();
 
         if ((moveLeftRightInput < 0 && facingRight) || (moveLeftRightInput > 0 && !facingRight))
@@ -56,10 +55,9 @@ public class PlayerController : MonoBehaviour
 
         Vector3 currentPos = transform.position;
         currentPos.x += moveLeftRightInput * speed * Time.deltaTime;
-        currentPos.y += moveUpDownInput * speed * Time.deltaTime;
         transform.position = currentPos;
 
-        animator.SetBool("IsMoving", moveLeftRightInput != 0 || moveUpDownInput != 0);
+        animator.SetBool("IsMoving", moveLeftRightInput != 0);
 
         #region Dash
         controls.Movement.Dash.performed += _ => Dash(moveLeftRightInput);

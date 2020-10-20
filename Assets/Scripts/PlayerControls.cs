@@ -19,14 +19,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
             ""id"": ""dabaec97-ff62-4a3c-b667-2892e2f3b728"",
             ""actions"": [
                 {
-                    ""name"": ""UpDown"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""af38f75c-f53f-4c5e-b173-46e8fd58884e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""LeftRight"",
                     ""type"": ""PassThrough"",
                     ""id"": ""63eb44e7-0098-4e3d-bdd4-852a1e3e49fd"",
@@ -44,39 +36,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": ""1D Axis"",
-                    ""id"": ""1fef3f65-b744-4f64-82bc-fd11f0b74875"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UpDown"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""44dfb263-3d1b-4a73-ab54-b700c14aa493"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UpDown"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""00d802df-f8b8-4188-bac6-72576eac216d"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UpDown"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
                 {
                     ""name"": ""1D Axis"",
                     ""id"": ""b8ea2f48-7176-4a1c-9ccb-cdbc325a1dba"",
@@ -128,7 +87,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
 }");
         // Movement
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
-        m_Movement_UpDown = m_Movement.FindAction("UpDown", throwIfNotFound: true);
         m_Movement_LeftRight = m_Movement.FindAction("LeftRight", throwIfNotFound: true);
         m_Movement_Dash = m_Movement.FindAction("Dash", throwIfNotFound: true);
     }
@@ -180,14 +138,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     // Movement
     private readonly InputActionMap m_Movement;
     private IMovementActions m_MovementActionsCallbackInterface;
-    private readonly InputAction m_Movement_UpDown;
     private readonly InputAction m_Movement_LeftRight;
     private readonly InputAction m_Movement_Dash;
     public struct MovementActions
     {
         private @PlayerControls m_Wrapper;
         public MovementActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @UpDown => m_Wrapper.m_Movement_UpDown;
         public InputAction @LeftRight => m_Wrapper.m_Movement_LeftRight;
         public InputAction @Dash => m_Wrapper.m_Movement_Dash;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
@@ -199,9 +155,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_MovementActionsCallbackInterface != null)
             {
-                @UpDown.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnUpDown;
-                @UpDown.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnUpDown;
-                @UpDown.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnUpDown;
                 @LeftRight.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnLeftRight;
                 @LeftRight.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnLeftRight;
                 @LeftRight.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnLeftRight;
@@ -212,9 +165,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
             m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @UpDown.started += instance.OnUpDown;
-                @UpDown.performed += instance.OnUpDown;
-                @UpDown.canceled += instance.OnUpDown;
                 @LeftRight.started += instance.OnLeftRight;
                 @LeftRight.performed += instance.OnLeftRight;
                 @LeftRight.canceled += instance.OnLeftRight;
@@ -227,7 +177,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     public MovementActions @Movement => new MovementActions(this);
     public interface IMovementActions
     {
-        void OnUpDown(InputAction.CallbackContext context);
         void OnLeftRight(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
     }
