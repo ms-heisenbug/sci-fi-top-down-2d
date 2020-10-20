@@ -68,6 +68,33 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Attack",
+            "id": "0b9597ff-42d2-44ae-a9d4-9af855430ac7",
+            "actions": [
+                {
+                    "name": "SwordAttack",
+                    "type": "Button",
+                    "id": "753b79f5-b3cc-4fa9-8f79-4fb4439dcdbc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5cac2bff-8915-43b8-8983-c5788940bbc8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwordAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

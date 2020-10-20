@@ -81,6 +81,33 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Attack"",
+            ""id"": ""0b9597ff-42d2-44ae-a9d4-9af855430ac7"",
+            ""actions"": [
+                {
+                    ""name"": ""SwordAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""753b79f5-b3cc-4fa9-8f79-4fb4439dcdbc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""5cac2bff-8915-43b8-8983-c5788940bbc8"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwordAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -89,6 +116,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_LeftRight = m_Movement.FindAction("LeftRight", throwIfNotFound: true);
         m_Movement_Dash = m_Movement.FindAction("Dash", throwIfNotFound: true);
+        // Attack
+        m_Attack = asset.FindActionMap("Attack", throwIfNotFound: true);
+        m_Attack_SwordAttack = m_Attack.FindAction("SwordAttack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -175,9 +205,46 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         }
     }
     public MovementActions @Movement => new MovementActions(this);
+
+    // Attack
+    private readonly InputActionMap m_Attack;
+    private IAttackActions m_AttackActionsCallbackInterface;
+    private readonly InputAction m_Attack_SwordAttack;
+    public struct AttackActions
+    {
+        private @PlayerControls m_Wrapper;
+        public AttackActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SwordAttack => m_Wrapper.m_Attack_SwordAttack;
+        public InputActionMap Get() { return m_Wrapper.m_Attack; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AttackActions set) { return set.Get(); }
+        public void SetCallbacks(IAttackActions instance)
+        {
+            if (m_Wrapper.m_AttackActionsCallbackInterface != null)
+            {
+                @SwordAttack.started -= m_Wrapper.m_AttackActionsCallbackInterface.OnSwordAttack;
+                @SwordAttack.performed -= m_Wrapper.m_AttackActionsCallbackInterface.OnSwordAttack;
+                @SwordAttack.canceled -= m_Wrapper.m_AttackActionsCallbackInterface.OnSwordAttack;
+            }
+            m_Wrapper.m_AttackActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @SwordAttack.started += instance.OnSwordAttack;
+                @SwordAttack.performed += instance.OnSwordAttack;
+                @SwordAttack.canceled += instance.OnSwordAttack;
+            }
+        }
+    }
+    public AttackActions @Attack => new AttackActions(this);
     public interface IMovementActions
     {
         void OnLeftRight(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+    }
+    public interface IAttackActions
+    {
+        void OnSwordAttack(InputAction.CallbackContext context);
     }
 }
