@@ -10,6 +10,7 @@ public class BackgroundLoop : MonoBehaviour
     private Vector2 screenBounds;
     private float choke;
     private Vector3 lastScreenPosition;
+    [SerializeField] Transform sunPosition;
 
     private void Awake()
     {
@@ -55,6 +56,11 @@ public class BackgroundLoop : MonoBehaviour
         }
 
         lastScreenPosition = transform.position;
+
+        Vector3 topRightCorner = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width - 150, Screen.height - 75, 60));
+        float width = sunPosition.GetComponent<SpriteRenderer>().bounds.extents.x;
+        float height = sunPosition.GetComponent<SpriteRenderer>().bounds.extents.y;
+        sunPosition.position = new Vector3(topRightCorner.x + width / 2, topRightCorner.y - height / 2, topRightCorner.z);
     }
 
     private void TweakChildPosition(GameObject obj)
