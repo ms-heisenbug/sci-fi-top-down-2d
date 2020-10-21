@@ -57,10 +57,12 @@ public class BackgroundLoop : MonoBehaviour
 
         lastScreenPosition = transform.position;
 
+        #region Blood moon position
         Vector3 topRightCorner = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width - 130, Screen.height - 50, 100));
         float width = sunPosition.GetComponent<SpriteRenderer>().bounds.extents.x;
         float height = sunPosition.GetComponent<SpriteRenderer>().bounds.extents.y;
         sunPosition.position = new Vector3(topRightCorner.x + width / 2, topRightCorner.y - height / 2, topRightCorner.z);
+        #endregion
     }
 
     private void TweakChildPosition(GameObject obj)
