@@ -16,6 +16,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CameraShake cameraShake;
     #endregion
 
+    #region Attack
+    [SerializeField] private GameObject swordLeft;
+    [SerializeField] private GameObject swordRight;
+    #endregion
+
     private void Awake()
     {
         controls = new PlayerControls();
@@ -62,6 +67,15 @@ public class PlayerController : MonoBehaviour
         #region Dash
         controls.Movement.Dash.performed += _ => Dash(moveLeftRightInput);
         #endregion
+
+        #region Attack
+        controls.Attack.SwordAttack.performed += SwordAttack_performed;
+        #endregion
+    }
+
+    private void SwordAttack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        animator.SetTrigger("SwordAttack");
     }
 
     private void Dash(float moveLeftRightInput)
@@ -109,6 +123,30 @@ public class PlayerController : MonoBehaviour
     {
         facingRight = !facingRight;
         transform.Rotate(Vector3.up * 180);
+    }
+
+    private void SwordAttack()
+    {
+        if (facingRight)
+        {
+            swordRight.SetActive(true);
+        }
+        else
+        {
+            swordLeft.SetActive(true);
+        }
+    }
+
+    private void SwordAttackDone()
+    {
+        if (facingRight)
+        {
+            swordRight.SetActive(false);
+        }
+        else
+        {
+            swordLeft.SetActive(false);
+        }
     }
 
     void Update()
